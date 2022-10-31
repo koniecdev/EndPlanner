@@ -10,9 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
-builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("MyOrigins", policy =>
@@ -70,7 +70,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
-	app.UseSwaggerUI();
+	app.UseSwaggerUI(c =>
+	{
+		c.OAuthClientId("swagger");
+		c.OAuth2RedirectUrl("https://localhost:7177/swagger/oauth2-redirect.html");
+		c.OAuthUsePkce();
+	});
 }
 
 app.UseHttpsRedirection();

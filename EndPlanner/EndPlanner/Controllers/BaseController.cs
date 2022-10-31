@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,7 @@ namespace EndPlanner.Controllers
 {
 	[EnableCors("MyOrigins")]
 	[ApiController]
+	[Authorize]
 	public class BaseController : ControllerBase
 	{
 		private IMediator _mediator;

@@ -84,7 +84,7 @@ namespace IdentityServerHost.Quickstart.UI
 					};
 					var jsonObject = JsonConvert.SerializeObject(dto);
 					var stringContent = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json"); 
-					using (var apiResponse = await httpClient.PostAsync("https://localhost:44326/api/tripusers", stringContent))
+					using (var apiResponse = await httpClient.PostAsync("https://localhost:7177/api/tripusers", stringContent))
 					{
 						if(apiResponse.StatusCode == System.Net.HttpStatusCode.OK || apiResponse.StatusCode == System.Net.HttpStatusCode.Created)
 						{

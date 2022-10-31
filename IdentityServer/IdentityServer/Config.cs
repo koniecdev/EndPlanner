@@ -50,8 +50,8 @@ namespace IdentityServer
 					AlwaysSendClientClaims = true,
 					AlwaysIncludeUserClaimsInIdToken = true,
 					AllowAccessTokensViaBrowser=true,
-					RedirectUris = { "https://localhost:44326/swagger/oauth2-redirect.html" },
-					AllowedCorsOrigins = { "https://localhost:44326" }
+					RedirectUris = { "https://localhost:7177/swagger/oauth2-redirect.html" },
+					AllowedCorsOrigins = { "https://localhost:7177" }
 			   },
 			   new Client
 			   {

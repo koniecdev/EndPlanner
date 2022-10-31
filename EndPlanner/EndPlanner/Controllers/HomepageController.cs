@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EndPlanner.Controllers
 {
-	[Route("[controller]")]
+	[Route("api/weather-forecasts")]
 	public class WeatherForecastController : BaseController
 	{
 		private static readonly string[] Summaries = new[]
