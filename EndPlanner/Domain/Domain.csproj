@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Entities\" />
+    <Compile Remove="GlobalUsings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ValueObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GlobalUsings.cs" />
   </ItemGroup>
 
 </Project>
