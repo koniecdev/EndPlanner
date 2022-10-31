@@ -6,7 +6,7 @@ public class AuditableEntity
 	public string? CreatedBy { get; set; }
 	public DateTime? Modified { get; set; }
 	public string? ModifiedBy { get; set; }
-	public int StatusId { get; set; }
-	public string? DeletedBy { get; set; }
-	public DateTime? InActivated { get; set; }
+	public int StatusId { get; set; } = 1;
+	public DateTime? Inactivated { get; set; }
+	public string? InactivatedBy { get; set; }
 }
