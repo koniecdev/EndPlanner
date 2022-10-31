@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Include="GlobalUsings.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="ExcelMapper" Version="5.2.429" />
-  </ItemGroup>
-
 </Project>
