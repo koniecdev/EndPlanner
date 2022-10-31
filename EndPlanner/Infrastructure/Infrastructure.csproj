@@ -10,4 +10,10 @@
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ExternalAPIs\" />
+    <Folder Include="FileStore\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
