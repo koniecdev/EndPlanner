@@ -1,6 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Common;
-using Domain.Entities;
 using Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

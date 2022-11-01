@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities;
+﻿namespace Domain.Entities.NBP;
 public class ExchangeRate
 {
 	public string No { get; set; } = "";

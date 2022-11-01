@@ -4,7 +4,7 @@ using Domain.Entities;
 using System.Reflection;
 
 namespace Persistance;
-public class EndPlannerDbContext : DbContext
+public class EndPlannerDbContext : DbContext, IEndPlannerDbContext
 {
     private readonly IDateTime _dateTime;
     private readonly ICurrentUserService _userService;
@@ -26,6 +26,7 @@ public class EndPlannerDbContext : DbContext
     public DbSet<Car> Cars { get; set; }
     public DbSet<Route> Routes { get; set; }
     public DbSet<Trip> Trips { get; set; }
+    public DbSet<Rule> Rules { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
