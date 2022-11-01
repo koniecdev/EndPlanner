@@ -1,12 +1,32 @@
+using Application;
 using Application.Common.Interfaces;
 using EndPlanner;
 using EndPlanner.Service;
+using EndPlannerApp.Shared;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using Persistance;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder? builder = null;
+var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
+try
+{
+	Log.Information("Application is starting up");
+	builder = WebApplication.CreateBuilder(args);
+}
+catch (Exception ex)
+{
+	Log.Fatal(ex, "Could not start up application");
+}
+finally
+{
+	Log.CloseAndFlush();
+}
+builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration));
+
 
 // Add services to the container.
 
@@ -62,6 +82,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
 
+builder.Services.AddShared();
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 
@@ -80,6 +102,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseSerilogRequestLogging();
 app.UseCors("MyOrigins");
 app.UseAuthentication();
 app.UseAuthorization();

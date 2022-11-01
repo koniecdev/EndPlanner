@@ -48,7 +48,7 @@ public partial class NBPClient : INBPClient
             {
                 var sc = await apiResponse.Content.ReadAsStringAsync(cancellationToken);
 				if (!string.IsNullOrEmpty(sc)){
-                    EuExchangesData deserialized = JsonConvert.DeserializeObject<EuExchangesData>(sc/*.Substring(1, sc.Length - 2)*/);
+                    EuExchangesData deserialized = JsonConvert.DeserializeObject<EuExchangesData>(sc.Substring(1, sc.Length - 2));
                     return deserialized;
 				}
 			}

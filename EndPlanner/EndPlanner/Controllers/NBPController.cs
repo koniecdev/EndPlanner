@@ -1,3 +1,4 @@
+using EndPlannerApp.Shared.NBP.Queries.GetAll;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EndPlanner.Controllers
@@ -7,9 +8,9 @@ namespace EndPlanner.Controllers
 	{
 		[HttpGet]
 		[Route("eu")]
-		public async Task<ActionResult<ICollection<GetEuropeanExchangesVm>>> GetMemberTripsCarsVm()
+		public async Task<ActionResult<GetEuExchangesVm>> GetMemberTripsCarsVm()
 		{
-			var response = await Mediator.Send(new GetEuropeanExchangesVm());
+			var response = await Mediator.Send(new GetEuExchangesQuery());
 			return response;
 		}
 
