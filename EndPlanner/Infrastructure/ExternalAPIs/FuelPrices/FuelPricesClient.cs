@@ -3,7 +3,7 @@ using Domain.Entities;
 using Ganss.Excel;
 using System.Text;
 
-namespace Infrastructure.ExternalAPIs.NBP;
+namespace Infrastructure.ExternalAPIs.FuelPrices;
 
 public partial class FuelPricesClient : IFuelPricesClient
 {

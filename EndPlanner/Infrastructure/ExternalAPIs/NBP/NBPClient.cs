@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 
-namespace EndTrip.Infrastructure.ExternalAPIs.NBP;
+namespace Infrastructure.ExternalAPIs.NBP;
 
 public partial class NBPClient : INBPClient
 {

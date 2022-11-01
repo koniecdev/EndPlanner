@@ -11,8 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("MyOrigins", policy =>
@@ -63,6 +61,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPersistance(builder.Configuration);
 
 var app = builder.Build();
 

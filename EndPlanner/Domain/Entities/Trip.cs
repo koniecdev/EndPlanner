@@ -8,4 +8,5 @@ public class Trip : AuditableEntity
 	public Car Car { get; set; }
 	public ICollection<Route> Routes { get; set; }
 	public ICollection<Member> Members { get; set; }
+	public ICollection<Rule> Rules { get; set; }
 }
