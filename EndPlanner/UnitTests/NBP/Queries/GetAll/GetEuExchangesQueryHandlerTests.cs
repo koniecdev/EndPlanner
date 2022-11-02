@@ -1,8 +1,11 @@
 ﻿using Application.Common.Interfaces;
 using Application.NBP.Queries.GetAll;
+using Application.NBP.Queries.GetBy;
 using AutoMapper;
+using EndPlannerApp.Shared.NBP.Queries.GetBy;
 using Persistance;
 using Shouldly;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -28,5 +31,13 @@ public class GetEuExchangesQueryHandlerTests
 		var handler = new GetEuExchangesQueryHandler(_NBP, _mapper);
 		var result = await handler.Handle(new EndPlannerApp.Shared.NBP.Queries.GetAll.GetEuExchangesQuery(), CancellationToken.None);
 		result.ShouldNotBeNull();
+	}
+
+	[Fact]
+	public async Task NBPGetExchangeByCodeTest()
+	{
+		var handler = new GetEuExchangeByCodeQueryHandler(_NBP, _mapper);
+		var result = await handler.Handle(new GetEuExchangeQuery() { CurrencyCode = "USD"}, CancellationToken.None);
+		result.Code.ShouldBe("USD");
 	}
 }

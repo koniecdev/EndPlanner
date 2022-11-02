@@ -53,10 +53,10 @@ public partial class NBPClient : INBPClient
 				}
 			}
 		}
-		throw new Exception("Error");
+		throw new Exception("NBP API Error");
 	}
 
-	public async Task<ExchangeCurrency> GetExchangeRateByCurrency(string requiredCurrencyCode, CancellationToken cancellationToken)
+	public async Task<EuExchangeCurrency> GetExchangeRateByCurrency(string requiredCurrencyCode, CancellationToken cancellationToken)
 	{
         var urlBuilder = new StringBuilder();
         urlBuilder.Append(_baseUrl).Append($"/exchangerates/rates/A/{requiredCurrencyCode}/?format=json");
@@ -73,8 +73,7 @@ public partial class NBPClient : INBPClient
                     //    NullValueHandling = NullValueHandling.Ignore,
                     //    MissingMemberHandling = MissingMemberHandling.Ignore
                     //};
-                    ExchangeCurrency deserialized = JsonConvert.DeserializeObject<ExchangeCurrency>(sc/*, settings*/);
-                    //Create Entity with all the fields, then automapper it to GetExchangeRateByCurrencyVm and return.
+                    EuExchangeCurrency deserialized = JsonConvert.DeserializeObject<EuExchangeCurrency>(sc/*, settings*/);
                     return deserialized;
                 }
             }

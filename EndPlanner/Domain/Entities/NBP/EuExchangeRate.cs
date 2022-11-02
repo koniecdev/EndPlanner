@@ -1,5 +1,5 @@
 ﻿namespace Domain.Entities.NBP;
-public class ExchangeRate
+public class EuExchangeRate
 {
 	public string No { get; set; } = "";
 	public string EffectiveDate { get; set; } = "";
