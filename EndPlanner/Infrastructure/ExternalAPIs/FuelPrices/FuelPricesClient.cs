@@ -1,7 +1,10 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.Entities.Fuel;
 using Ganss.Excel;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Infrastructure.ExternalAPIs.FuelPrices;
 
@@ -21,7 +24,36 @@ public partial class FuelPricesClient : IFuelPricesClient
 		};
 	}
 
-	public async Task<List<Tuple<string, double>>> GetAllEuropeanCountryPrices(string fuelType, CancellationToken cancellationToken)
+	public async Task<List<FuelData>> GetSelectedEuropeanCountryPrices(string fuelType, string providedCountries, CancellationToken cancellationToken)
+	{
+		List<string> formattedCountries = Regex.Replace(providedCountries, @"\s+", "").ToUpper().Split(",").ToList();
+		string dataPath = await DownloadFreshFile(cancellationToken);
+		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+		var products = new ExcelMapper(dataPath).Fetch<Fuel>().ToList();
+		if (string.IsNullOrWhiteSpace(fuelType))
+		{
+			throw new NotFoundException(fuelType, new Exception());
+		}
+		if (formattedCountries.Count == 0)
+		{
+			throw new NotFoundException("countries in string does not exsits", new Exception());
+		}
+		var fromSheet = products.Where(m => m.FuelName.Contains(FuelType[fuelType]) && formattedCountries.Any(x=>x.Contains(m.CountryCode))).ToList();
+		List<FuelData> data = new();
+		var _pl = products.FirstOrDefault(m => m.CountryCode.Contains("PL"));
+		foreach (var country in fromSheet)
+		{
+			double WeeklyPrice = double.Parse(country.WeeklyPricesWithTax.Replace(",", ""), System.Globalization.CultureInfo.InvariantCulture);
+			double PricesUnit = double.Parse(country.PricesUnit.Replace("L", ""), System.Globalization.CultureInfo.InvariantCulture);
+			double EuroExchangeRate = double.Parse(_pl.EuroExchangeRate, System.Globalization.CultureInfo.InvariantCulture);
+			double PriceInPln = WeeklyPrice / EuroExchangeRate;
+			double PricePerLiter = Math.Round((PriceInPln / PricesUnit), 2, MidpointRounding.AwayFromZero);
+			data.Add(new FuelData() { CountryName = country.CountryName, CountryCode = country.CountryCode, Date = country.Date, PricePerLiter = PricePerLiter });
+		}
+		return data;
+	}
+
+	public async Task<List<FuelData>> GetAllEuropeanCountryPrices(string fuelType, CancellationToken cancellationToken)
     {
 		string dataPath = await DownloadFreshFile(cancellationToken);
 		Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -32,7 +64,7 @@ public partial class FuelPricesClient : IFuelPricesClient
 		}
 		var fromSheat = products.Where(m => m.FuelName.Contains(FuelType[fuelType])).ToList();
 
-		List<Tuple<string, double>> data = new();
+		List<FuelData> data = new();
 		var _pl = fromSheat.FirstOrDefault(m => m.CountryCode.Contains("PL"));
 		foreach (var country in fromSheat)
 		{
@@ -41,7 +73,7 @@ public partial class FuelPricesClient : IFuelPricesClient
 			double EuroExchangeRate = double.Parse(_pl.EuroExchangeRate, System.Globalization.CultureInfo.InvariantCulture);
 			double PriceInPln = WeeklyPrice / EuroExchangeRate;
 			double PricePerLiter = Math.Round((PriceInPln / PricesUnit), 2, MidpointRounding.AwayFromZero);
-			data.Add(new Tuple<string, double>(country.CountryName, PricePerLiter));
+			data.Add(new FuelData() { CountryName = country.CountryName, CountryCode = country.CountryCode, Date = country.Date, PricePerLiter = PricePerLiter});
 		}
 		return data;
 	}
@@ -53,7 +85,7 @@ public partial class FuelPricesClient : IFuelPricesClient
 			using (var apiResponse = await client.GetAsync("https://ec.europa.eu/energy/observatory/reports/latest_prices_raw_data.xlsx", cancellationToken))
 			{
 				var fromStr = await apiResponse.Content.ReadAsByteArrayAsync(cancellationToken);
-				var dataPath = _fileStore.SafeWriteFile(fromStr, "fueldata.xlsx", Path.Combine(Directory.GetCurrentDirectory(),"FuelData"));
+				var dataPath = _fileStore.SafeWriteFile(fromStr, "fueldata.xlsx", "/MyStaticFiles");
 				return dataPath;
 			}
 		}

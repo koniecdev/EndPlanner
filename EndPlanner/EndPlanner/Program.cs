@@ -5,6 +5,7 @@ using EndPlanner.Service;
 using EndPlannerApp.Shared;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using Persistance;
 using Serilog;
@@ -102,6 +103,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles(new StaticFileOptions
+{
+	FileProvider = new PhysicalFileProvider(
+		   Path.Combine(builder.Environment.ContentRootPath, "MyStaticFiles")),
+	RequestPath = "/StaticFiles"
+});
 app.UseSerilogRequestLogging();
 app.UseCors("MyOrigins");
 app.UseAuthentication();

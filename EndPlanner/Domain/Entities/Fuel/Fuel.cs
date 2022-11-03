@@ -1,5 +1,5 @@
 ﻿using Ganss.Excel;
-namespace Domain.Entities;
+namespace Domain.Entities.Fuel;
 public class Fuel
 {
 	[Column("Prices in force on")]
