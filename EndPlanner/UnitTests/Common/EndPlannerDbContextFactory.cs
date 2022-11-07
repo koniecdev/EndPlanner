@@ -49,6 +49,9 @@ public static class EndPlannerDbContextFactory
 		var car1 = new Car() { Id = 1, StatusId = 1, Name = "Prelude", DriversAvailable = 2, FuelConsumption = 10.5, FuelType = 1, MemberId = 1, Seats = 4, TankLiters = 60 };
 		context.Cars.Add(car1);
 
+		var car2 = new Car() { Id = 2, StatusId = 1, Name = "Del Sol", DriversAvailable = 2, FuelConsumption = 8, FuelType = 1, MemberId = 1, Seats = 9, TankLiters = 45 };
+		context.Cars.Add(car2);
+
 		var trip1 = new Trip()
 		{
 			Id = 1,
