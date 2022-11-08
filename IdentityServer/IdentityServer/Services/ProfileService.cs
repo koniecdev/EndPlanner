@@ -1,4 +1,5 @@
-﻿using IdentityServer.Models;
+﻿using IdentityModel;
+using IdentityServer.Models;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +24,12 @@ namespace IdentityServer.Services {
 				new Claim("Email", user.Email),
 				new Claim("Name", user.UserName)
 			};
+			var userRoles = await _userManager.GetRolesAsync(await _userManager.FindByIdAsync(user.Id));
+			foreach(var userRole in userRoles)
+			{
+				claims.Add(new Claim(JwtClaimTypes.Role, userRole));
+			}
+
 			context.IssuedClaims.AddRange(claims);
 		}
 

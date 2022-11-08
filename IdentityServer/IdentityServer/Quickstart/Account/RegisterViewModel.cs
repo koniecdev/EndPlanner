@@ -12,6 +12,5 @@ namespace IdentityServerHost.Quickstart.UI
 	{
 		public string Email { get; set; } = "";
 		public string RepeatPassword { get; set; } = "";
-		public string ReturnUrl { get; set; } = "";
 	}
 }

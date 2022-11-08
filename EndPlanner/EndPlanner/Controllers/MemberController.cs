@@ -1,5 +1,7 @@
 using EndPlannerApp.Shared.Members.Commands;
 using EndPlannerApp.Shared.Members.Queries;
+using IdentityModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EndPlanner.Controllers;
@@ -16,8 +18,14 @@ public class MemberController : BaseController
 	}
 
 	[HttpPost]
+	[AllowAnonymous]
 	public async Task<ActionResult<int>> Member(CreateMemberCommand command)
 	{
+		var secret = Request.Headers["AuthEnd"].ToString();
+		if ("secret".ToSha512() != secret)
+		{
+			return Conflict();
+		}
 		try
 		{
 			int response = await Mediator.Send(command);

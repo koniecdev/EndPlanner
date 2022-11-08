@@ -62,7 +62,7 @@ namespace IdentityServerHost.Quickstart.UI
 		[HttpPost]
 		public async Task<IActionResult> Register(RegisterViewModel vm)
 		{
-			ApplicationUser newApplicationUser = new ApplicationUser()
+			ApplicationUser newApplicationUser = new()
 			{
 				Email = vm.Email,
 				UserName = vm.Username
@@ -71,25 +71,22 @@ namespace IdentityServerHost.Quickstart.UI
 			{
 				return UnprocessableEntity();
 			}
-			var createResult = await _userManager.CreateAsync(newApplicationUser, vm.Password);
-			if (createResult.Succeeded)
+			using (var httpClient = new HttpClient())
 			{
-				using(var httpClient = new HttpClient())
+				httpClient.DefaultRequestHeaders.Add("AuthEnd", "secret".ToSha512());
+				var dto = new ApplicationUserDto()
 				{
-					httpClient.DefaultRequestHeaders.Add("AuthEnd", "secret".ToSha512());
-					var dto = new ApplicationUserDto()
+					UserEmail = newApplicationUser.Email,
+					UserId = newApplicationUser.Id
+				};
+				var jsonObject = JsonConvert.SerializeObject(dto);
+				var stringContent = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json");
+				using (var apiResponse = await httpClient.PostAsync("https://localhost:7177/api/members", stringContent))
+				{
+					if (apiResponse.StatusCode == System.Net.HttpStatusCode.OK || apiResponse.StatusCode == System.Net.HttpStatusCode.Created)
 					{
-						UserEmail = newApplicationUser.Email,
-						UserId = newApplicationUser.Id
-					};
-					var jsonObject = JsonConvert.SerializeObject(dto);
-					var stringContent = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json"); 
-					using (var apiResponse = await httpClient.PostAsync("https://localhost:7177/api/tripusers", stringContent))
-					{
-						if(apiResponse.StatusCode == System.Net.HttpStatusCode.OK || apiResponse.StatusCode == System.Net.HttpStatusCode.Created)
-						{
-							return Redirect(vm.ReturnUrl);
-						}
+						var createResult = await _userManager.CreateAsync(newApplicationUser, vm.Password);
+						return Redirect("https://localhost:7177/swagger/index.html");
 					}
 				}
 			}

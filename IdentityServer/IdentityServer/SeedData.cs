@@ -32,6 +32,29 @@ namespace IdentityServer
 			{
 				using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
 				{
+					var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+					var member = roleManager.FindByNameAsync("member").Result;
+					if(member == null)
+					{
+						member = new() { Name = "member" };
+						var r = roleManager.CreateAsync(member).Result;
+						if(r != IdentityResult.Success)
+						{
+							throw new Exception("Adding roles problem");
+						}
+					}
+
+					var admin = roleManager.FindByNameAsync("admin").Result;
+					if(admin == null)
+					{
+						admin = new() { Name = "admin" };
+						var r = roleManager.CreateAsync(admin).Result;
+						if (r != IdentityResult.Success)
+						{
+							throw new Exception("Adding roles problem admin");
+						}
+					}
+
 					var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 					context.Database.Migrate();
 
@@ -99,6 +122,16 @@ namespace IdentityServer
 					else
 					{
 						Log.Debug("bob already exists");
+					}
+
+					var defaultAdmin = userMgr.FindByEmailAsync("iaidoka1@koniec.dev").Result;
+					if(!userMgr.IsInRoleAsync(defaultAdmin, "admin").Result)
+					{
+						var r = userMgr.AddToRoleAsync(defaultAdmin, "admin").Result;
+						if (r != IdentityResult.Success)
+						{
+							throw new Exception("Adding roles addToRole");
+						}
 					}
 				}
 			}
