@@ -1,5 +1,3 @@
-using Application.Common.Interfaces;
-using AutoMapper;
 using Domain.Entities.Fuel;
 using Domain.Entities.NBP;
 using EndPlannerApp.Shared.Common.Mappings;
@@ -8,10 +6,6 @@ using Newtonsoft.Json;
 using Persistance;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Xunit;
 namespace UnitTests;
 
 public class QueryTestFixtures : IDisposable

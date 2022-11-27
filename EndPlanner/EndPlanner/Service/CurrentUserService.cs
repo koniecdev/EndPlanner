@@ -13,7 +13,6 @@ public class CurrentUserService : ICurrentUserService
 	public CurrentUserService()
 	{
 		Email = "DummyEmail@dummy.com";
-		Email = "DummyEmail@dummy.com";
 		Id = "DummyId";
 		IsAuthenticated = true;
 	}

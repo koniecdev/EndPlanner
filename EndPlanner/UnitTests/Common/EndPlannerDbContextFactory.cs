@@ -1,17 +1,8 @@
-using Application.Common.Interfaces;
 using Domain.Entities;
-using Domain.Entities.NBP;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using Newtonsoft.Json;
 using Persistance;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
 namespace UnitTests;
 
 public static class EndPlannerDbContextFactory
@@ -36,9 +27,9 @@ public static class EndPlannerDbContextFactory
 
 		context.Database.EnsureCreated();
 
-		var country1 = new Country() { Id = 1, StatusId = 1, Name = "France", CountryCode = "FRA", CurrencyCode = "EUR" };
+		var country1 = new Country() { Id = 1, StatusId = 1, Name = "France", CountryCode = "FR", CountryCode3 = "FRA", CurrencyCode = "EUR" };
 		context.Countries.Add(country1);
-		var country2 = new Country() { Id = 2, StatusId = 1, Name = "Germany", CountryCode = "DEU", CurrencyCode = "EUR" };
+		var country2 = new Country() { Id = 2, StatusId = 1, Name = "Germany", CountryCode = "DE", CountryCode3 = "DEU", CurrencyCode = "EUR" };
 		context.Countries.Add(country2);
 
 		var member1 = new Member() { Id = 1, StatusId = 1, UserEmail = "lmao@lmao.pl", UserId = "UserIdOfMember" };
@@ -46,10 +37,10 @@ public static class EndPlannerDbContextFactory
 		var member2 = new Member() { Id = 2, StatusId = 1, UserEmail = "mocked@user.pl", UserId = "mockedUserId" };
 		context.Members.Add(member2);
 
-		var car1 = new Car() { Id = 1, StatusId = 1, Name = "Prelude", DriversAvailable = 2, FuelConsumption = 10.5, FuelType = 1, MemberId = 1, Seats = 4, TankLiters = 60 };
+		var car1 = new Car() { Id = 1, StatusId = 1, Name = "Prelude", FuelConsumption = 10.5, FuelType = 1, MemberId = 1, Seats = 4, TankLiters = 60 };
 		context.Cars.Add(car1);
 
-		var car2 = new Car() { Id = 2, StatusId = 1, Name = "Del Sol", DriversAvailable = 2, FuelConsumption = 8, FuelType = 1, MemberId = 1, Seats = 9, TankLiters = 45 };
+		var car2 = new Car() { Id = 2, StatusId = 1, Name = "Del Sol", FuelConsumption = 8, FuelType = 1, MemberId = 1, Seats = 9, TankLiters = 45 };
 		context.Cars.Add(car2);
 
 		var trip1 = new Trip()
@@ -65,6 +56,7 @@ public static class EndPlannerDbContextFactory
 				PostalCode = "11-111",
 				Street = "Streett"
 			},
+			DriversAvailable = 2,
 			Members = new List<Member>() { member1, member2 },
 			Routes = new List<Route>(),
 			Rules = new List<Rule>()
@@ -89,6 +81,15 @@ public static class EndPlannerDbContextFactory
 			TripId = 1
 		};
 		context.Routes.Add(route1);
+		var rule1 = new Rule()
+		{
+			Id = 1,
+			Description = "You cant pull over on autobahn",
+			CountryId = 2,
+			TripId = 1
+		};
+		context.Rules.Add(rule1);
+
 
 		context.SaveChanges();
 

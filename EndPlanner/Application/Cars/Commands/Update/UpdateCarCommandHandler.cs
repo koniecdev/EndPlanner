@@ -1,5 +1,4 @@
 ﻿using EndPlannerApp.Shared.Cars.Commands;
-using EndPlannerApp.Shared.Members.Commands;
 
 namespace Application.Cars.Commands;
 public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, Unit>

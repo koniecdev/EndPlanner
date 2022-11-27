@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Entities.Fuel;
-
-namespace EndPlannerApp.Shared.Members.Commands;
+﻿namespace EndPlannerApp.Shared.Members.Commands;
 
 public class DeleteMemberCommand : IRequest<Unit>
 {

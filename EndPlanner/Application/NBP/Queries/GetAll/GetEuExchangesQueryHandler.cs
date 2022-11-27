@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Domain.Entities.NBP;
+﻿using Domain.Entities.NBP;
 using EndPlannerApp.Shared.NBP.Queries.GetAll;
 
 namespace Application.NBP.Queries.GetAll;

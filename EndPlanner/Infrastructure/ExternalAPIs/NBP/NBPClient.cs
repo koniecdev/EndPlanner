@@ -1,8 +1,6 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
 using Domain.Entities.NBP;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 
 namespace Infrastructure.ExternalAPIs.NBP;

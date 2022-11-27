@@ -36,9 +36,6 @@ namespace Persistance.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DriversAvailable")
-                        .HasColumnType("int");
-
                     b.Property<double>("FuelConsumption")
                         .HasColumnType("float");
 
@@ -301,6 +298,9 @@ namespace Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DriversAvailable")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Inactivated")
                         .HasColumnType("datetime2");

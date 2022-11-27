@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Persistance.Migrations
 {
-    public partial class AddRuleToDb : Migration
+	public partial class AddRuleToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

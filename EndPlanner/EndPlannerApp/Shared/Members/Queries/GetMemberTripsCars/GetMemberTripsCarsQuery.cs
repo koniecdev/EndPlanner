@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Entities.Fuel;
-
-namespace EndPlannerApp.Shared.Members.Queries;
+﻿namespace EndPlannerApp.Shared.Members.Queries;
 
 public class GetMemberTripsCarsQuery : IRequest<GetMemberTripsCarsVm>
 {

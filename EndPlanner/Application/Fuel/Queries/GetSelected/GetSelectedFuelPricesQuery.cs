@@ -1,6 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities.Fuel;
+﻿using Domain.Entities.Fuel;
 using EndPlannerApp.Shared.Fuel.Queries.GetSelected;
 
 namespace Application.NBP.Queries.GetBy;

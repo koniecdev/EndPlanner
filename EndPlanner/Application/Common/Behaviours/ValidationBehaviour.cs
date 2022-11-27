@@ -1,7 +1,4 @@
-﻿using FluentValidation;
-using MediatR.Pipeline;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Application.Common.Behaviours;
 

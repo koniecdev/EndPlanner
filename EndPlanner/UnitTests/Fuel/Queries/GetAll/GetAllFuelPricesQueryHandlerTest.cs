@@ -1,16 +1,8 @@
-﻿using Application.Common.Interfaces;
-using Application.NBP.Queries.GetAll;
+﻿using Application.NBP.Queries.GetAll;
 using Application.NBP.Queries.GetBy;
-using AutoMapper;
 using EndPlannerApp.Shared.Fuel.Queries.GetAll;
 using EndPlannerApp.Shared.Fuel.Queries.GetSelected;
-using EndPlannerApp.Shared.NBP.Queries.GetBy;
 using Persistance;
-using Shouldly;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace UnitTests.NBP.Queries.GetAll;
 

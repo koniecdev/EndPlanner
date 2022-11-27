@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Entities.Fuel;
 
 namespace EndPlannerApp.Shared.Members.Queries;
 

@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Entities.Fuel;
-
-namespace EndPlannerApp.Shared.Cars.Commands;
+﻿namespace EndPlannerApp.Shared.Cars.Commands;
 
 public class DeleteCarCommand : IRequest<Unit>
 {

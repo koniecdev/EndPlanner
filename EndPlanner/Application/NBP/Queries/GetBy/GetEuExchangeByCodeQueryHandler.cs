@@ -1,6 +1,4 @@
-﻿using Application.Common.Exceptions;
-using Application.Common.Interfaces;
-using Domain.Entities.NBP;
+﻿using Domain.Entities.NBP;
 using EndPlannerApp.Shared.NBP.Queries.GetBy;
 
 namespace Application.NBP.Queries.GetBy;
